@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="variable-config">
+        <label for="keyCode">Código da tecla: </label>
+        <input type="text" name="keyCode" id="keyCode">
+
+        <label for="timeMorse">Tempo pressionado: </label>
+        <input type="number" name="timeMorse" id="timeMorse">
+
+        <label for="timeSpace">Tempo para espaço: </label>
+        <input type="number" name="timeSpace" id="timeSpace">
+
+        <div>
+            <label for="audio">Som</label>
+            <input type="checkbox" name="audio" id="audio">
+        </div>
+
+        <button id="btnClear">Limpar texto</button>
+    </div>
+    <div id="letterCard">
+        <div id="letterChar">A</div>
+        <div id="letterMorse">._.</div>
+    </div>
+    <h1 id="titulo"></h1>
+</body>
+<script src="index.js"></script>
+</html>
