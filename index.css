@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;600&family=Nunito:wght@500&display=swap');
 
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 body {
     position: relative;
     width: 100vw;
@@ -42,4 +48,29 @@ body {
 
 #titulo,#letterMorse {
     font-family: 'Karla', sans-serif;
+}
+
+.isClosed{
+    display: none;
+}
+
+#audio {
+    display: none;
+}
+#audio + label {
+    background:url('images/no-sound.svg') no-repeat;
+    background-size: 100%;
+    width: 25px;
+    height: 25px;
+    display:inline-block;
+    padding: 0 0 0 0px;
+}
+
+#audio:checked + label{
+    background:url('images/sound.svg') no-repeat;
+    background-size: 100%;
+    width: 27px;
+    height: 27px;
+    display:inline-block;
+    padding: 0 0 0 0px;
 }

@@ -8,25 +8,27 @@
 </head>
 <body>
     <div class="variable-config">
-        <label for="keyCode">Código da tecla: </label>
-        <input type="text" name="keyCode" id="keyCode">
+        <img id="config" src="images/gear-solid.svg" width="30px" alt="" srcset="">
+        <label class="isClosed" for="keyCode">Código da tecla: </label>
+        <input class="isClosed" type="text" name="keyCode" id="keyCode">
 
-        <label for="timeMorse">Tempo pressionado: </label>
-        <input type="number" name="timeMorse" id="timeMorse">
+        <label class="isClosed" for="timeMorse">Tempo pressionado: </label>
+        <input class="isClosed" type="number" name="timeMorse" id="timeMorse">
 
-        <label for="timeSpace">Tempo para espaço: </label>
-        <input type="number" name="timeSpace" id="timeSpace">
+        <label class="isClosed" for="timeSpace">Tempo para espaço: </label>
+        <input class="isClosed" type="number" name="timeSpace" id="timeSpace">
 
-        <div>
-            <label for="audio">Som</label>
+        <div class="isClosed">
             <input type="checkbox" name="audio" id="audio">
+            <label for="audio"></label>
         </div>
 
         <button id="btnClear">Limpar texto</button>
+        <button id="btnSequencia">Sequencia</button>
     </div>
     <div id="letterCard">
-        <div id="letterChar">A</div>
-        <div id="letterMorse">._.</div>
+        <div id="letterChar"></div>
+        <div id="letterMorse"></div>
     </div>
     <h1 id="titulo"></h1>
 </body>
