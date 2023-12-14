@@ -23,6 +23,10 @@ const defaultControlMorse = 10
 const defaultKeyCode = "Space"
 const defaultIsAudioActive = 1
 //funções
+const resetCard = () => {
+    divLetterChar.innerHTML = ""
+    divLetterMorse.innerHTML = ""
+}
 const getRandomLetter = () => {
     let randomNumber = Math.floor(Math.random()*alphabetLettersArray.length)
     currentLetter.letter = alphabetLettersArray[randomNumber]
@@ -186,6 +190,7 @@ divLetterCard.addEventListener("click", () => {
 btnSequencia.addEventListener("click", () => {
     isPlayingModeActive = !isPlayingModeActive
     isWriteModeActive = false
+    resetCard()
     if(isPlayingModeActive){
         isControlSpaceOn()
         getRandomLetter()
@@ -195,6 +200,7 @@ btnSequencia.addEventListener("click", () => {
 btnEscrita.addEventListener("click", () => {
     isWriteModeActive = !isWriteModeActive
     isPlayingModeActive = false
+    resetCard()
     if(isWriteModeActive){
         isControlSpaceOn()
     }
