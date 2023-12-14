@@ -3,7 +3,8 @@
 const titulo = document.querySelector("#titulo")                    // mostrar o código digitado
 const inputKeyCode = document.querySelector("#keyCode")             // escolher a tecla
 const btnClear = document.querySelector("#btnClear")                // botão para limpar a tela
-const btnSequencia = document.querySelector("#btnSequencia")            // botão para iniciar Sequencia
+const btnSequencia = document.querySelector("#btnSequencia")        // botão para iniciar Sequencia
+const btnEscrita = document.querySelector("#btnEscrita")            // botão para iniciar Escrita
 const inputTimeMorse = document.querySelector("#timeMorse")         // escolher o tempo pressionado
 const inputTimeSpace = document.querySelector("#timeSpace")         // escolher tempo de espaço
 const checkBoxAudio = document.querySelector("#audio")              // botão ativar/desativar som 
@@ -23,11 +24,17 @@ const defaultKeyCode = "Space"
 const defaultIsAudioActive = 1
 //funções
 const getRandomLetter = () => {
-    let randomNumber = Math.floor(Math.random()*alphabetArray.length)
-    currentLetter.letter = alphabetArray[randomNumber]
+    let randomNumber = Math.floor(Math.random()*alphabetLettersArray.length)
+    currentLetter.letter = alphabetLettersArray[randomNumber]
     currentLetter.morse = alphabet[currentLetter.letter]
     divLetterChar.innerHTML = currentLetter.letter
     divLetterMorse.innerHTML = currentLetter.morse
+}
+const isControlSpaceOn = () => {
+    if(!controlSpace){
+        controlSpace = defaultControlMorse
+        inputTimeSpace.value = controlSpace*timeSpace
+    }
 }
 // --------- Dicionario Morse ---------
 const alphabet = {
@@ -58,13 +65,15 @@ const alphabet = {
     "Y": "_.__",
     "Z": "__..",
 } 
-const alphabetArray = Object.keys(alphabet)
+const alphabetLettersArray = Object.keys(alphabet)
+const alphabetMorseArray = Object.values(alphabet)
 
 // --------- variaveis de controle do programa --------- 
 let controlTime = 0
 let timer
 let currentLetter= {letter: "", morse: ""}
 let isPlayingModeActive = false
+let isWriteModeActive = false
 // --------- variaveis expostas ---------
 let keyCode, controlSpace ,controlMorse, isAudioActive
 
@@ -107,6 +116,9 @@ inputTimeMorse.addEventListener("change", e => {
 inputTimeSpace.addEventListener("change", e => {
     controlSpace = e.target.value/timeSpace
     localStorage.setItem('controlSpace', controlSpace);
+    if(isPlayingModeActive){
+        isControlSpaceOn()
+    }
 })
 
 //ativar/desativar o audio
@@ -123,7 +135,7 @@ btnClear.addEventListener("click", () => {
 // --------- funçoes do morse ---------
 window.addEventListener("keydown", e => {
     if(e.code === keyCode && !e.repeat){
-        if(controlSpace && !isPlayingModeActive){
+        if(controlSpace && !isPlayingModeActive && !isWriteModeActive){
             clearInterval(timer)
             titulo.innerHTML += controlTime >= controlSpace ? " ":""
         }else{
@@ -141,12 +153,23 @@ window.addEventListener("keyup", e =>{
         if(isAudioActive) audio.pause()
         titulo.innerHTML += controlTime >= controlMorse ? "_":"."
         controlTime = 0
-        if(controlSpace && !isPlayingModeActive){
+        if(controlSpace && !isPlayingModeActive && !isWriteModeActive){
             timer = setInterval(() => {controlTime++}, timeSpace)
-        }else{
+        }else if(isPlayingModeActive){
             timer = setTimeout(() => {
                 if(titulo.innerHTML === currentLetter.morse){
                     getRandomLetter()
+                }
+                titulo.innerHTML = ""
+            },controlSpace*timeSpace)
+        }else if(isWriteModeActive){
+            timer = setTimeout(() => {
+                let morseIndex = alphabetMorseArray.indexOf(titulo.innerHTML)
+                if(morseIndex !== -1){
+                    currentLetter.letter = alphabetLettersArray[morseIndex]
+                    currentLetter.morse = alphabet[currentLetter.letter]
+                    divLetterChar.innerHTML = currentLetter.letter
+                    divLetterMorse.innerHTML = currentLetter.morse
                 }
                 titulo.innerHTML = ""
             },controlSpace*timeSpace)
@@ -161,11 +184,19 @@ divLetterCard.addEventListener("click", () => {
 })
 //modo sequencia
 btnSequencia.addEventListener("click", () => {
-    isPlayingModeActive = true
-    if(!controlSpace){
-        controlSpace = defaultControlMorse
-        inputTimeSpace.value = controlSpace*timeSpace
+    isPlayingModeActive = !isPlayingModeActive
+    isWriteModeActive = false
+    if(isPlayingModeActive){
+        isControlSpaceOn()
+        getRandomLetter()
     }
-    getRandomLetter()
+})
+// modo escrita
+btnEscrita.addEventListener("click", () => {
+    isWriteModeActive = !isWriteModeActive
+    isPlayingModeActive = false
+    if(isWriteModeActive){
+        isControlSpaceOn()
+    }
 })
 
